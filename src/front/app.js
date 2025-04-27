@@ -1,6 +1,7 @@
 const nameForm = document.getElementById('nameForm');
 const nameInput = document.getElementById('nameInput');
 const nameList = document.getElementById('nameList');
+const message = document.getElementById('message')
 
 nameForm.addEventListener('submit', async(e) => {
   e.preventDefault();
@@ -12,8 +13,14 @@ nameForm.addEventListener('submit', async(e) => {
   });
     nameInput.value = '';
     await loadNames();
+    message.innerText = 'Nombre agregado'
+
+    setTimeout(function() {
+      message.innerText = ''
+    }, 2000)
   });
   const loadNames = async() => {
+    nameList.innerHTML = '';
     const response = await fetch('http://localhost:3000/message/names')
     const data = await response.json();
     data.savedNames.forEach(element => {
@@ -22,6 +29,5 @@ nameForm.addEventListener('submit', async(e) => {
       nameList.appendChild(li)
     });
   }
-
 
   loadNames()
