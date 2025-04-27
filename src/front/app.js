@@ -11,8 +11,17 @@ nameForm.addEventListener('submit', async(e) => {
     body: JSON.stringify({ name: name }),
   });
     nameInput.value = '';
+    await loadNames();
+  });
+  const loadNames = async() => {
+    const response = await fetch('http://localhost:3000/message/names')
+    const data = await response.json();
+    data.savedNames.forEach(element => {
+      let li = document.createElement('li')
+      li.innerText = element
+      nameList.appendChild(li)
+    });
+  }
 
-  const loadNames = async () => {
-  await fetch('http://localhost:3000/message/names', {
-  method: 'GET',
-});
+
+  loadNames()
