@@ -9,7 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './Entities/user.entity';
+// import { User } from './Entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -42,7 +42,7 @@ export class UsersController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    this.userService.remove(id);
+    void this.userService.remove(id);
     return { message: `Usuario con ID ${id} eliminado` };
   }
 }
