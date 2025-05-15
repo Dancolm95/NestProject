@@ -8,14 +8,13 @@ import {
   ParseIntPipe,
   Delete,
   UseGuards,
-  Request,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthenticatedUser } from 'src/auth/interfaces/user-from-jwt.interfaces';
-import { Request } from 'express';
 import { AuthRequest } from 'src/auth/interfaces/auth-request.interface';
 @Controller('users')
 export class UsersController {
@@ -31,14 +30,14 @@ export class UsersController {
     return this.userService.findAll();
   }
 
+  @Get('profile')
+  @UseGuards(AuthGuard('jwt'))
+  getProfile(@Req() req: AuthRequest) {
+    return req.user;
+  }
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.userService.findOne(id);
-  }
-  @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
-  getProfile(@Request() req: AuthRequest) {
-    return req.user;
   }
 
   @Patch(':id')
