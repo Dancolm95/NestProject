@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { UserResponseDto } from 'src/users/dto/userResponse';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../users/Entities/user.entity';
+import { User, UserRole } from '../users/Entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +22,7 @@ export class AuthService {
     const user = await this.userService.findByEmail(email);
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password: _, ...rest } = user;
-      const payload = { sub: user.id, email: user.email };
+      const payload = { sub: user.id, email: user.email, role: user.role };
       return {
         access_token: this.jwtService.sign(payload),
         user: rest,
@@ -43,6 +43,7 @@ export class AuthService {
     const nuevoUsuario = this.usersRepository.create({
       email,
       password: hashed,
+      role: UserRole.USER,
     });
     await this.usersRepository.save(nuevoUsuario);
 
