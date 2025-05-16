@@ -16,6 +16,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthenticatedUser } from 'src/auth/interfaces/user-from-jwt.interfaces';
 import { AuthRequest } from 'src/auth/interfaces/auth-request.interface';
+import { Roles } from 'src/auth/decorators/roles.decorators';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
@@ -28,6 +30,13 @@ export class UsersController {
   @Get()
   findAll() {
     return this.userService.findAll();
+  }
+
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('ADMIN')
+  @Get('admin')
+  getAdminOnlyData() {
+    return { message: 'Solo accesible para ADMIN' };
   }
 
   @Get('profile')
@@ -43,7 +52,7 @@ export class UsersController {
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: UpdateUserDto
   ) {
     return this.userService.update(id, updateUserDto);
   }
