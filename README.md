@@ -61,3 +61,31 @@ JWT_SECRET=jwt_super_secret
 JWT_EXPIRES_IN=1d
 ```
 
+## 📮 API Endpoints
+
+| Method | Route           | Description             | Auth Required |
+|--------|------------------|--------------------------|----------------|
+| POST   | `/auth/register` | Register new user        | ❌             |
+| POST   | `/auth/login`    | Login and get token      | ❌             |
+| GET    | `/users`         | Get all users            | ✅ JWT         |
+| GET    | `/users/admin`   | Protected route (ADMIN)  | ✅ JWT + Role  |
+
+## 🛠 TODO / Upcoming Features
+- [ ] Exception filters for clean error handling
+- [ ] Response interceptors (e.g., transform responses)
+- [ ] Public decorator to bypass global guards (`@Public`)
+- [ ] Custom roles decorator
+- [ ] Extend user entity with more fields
+- [ ] Move to microservices architecture (planned for Week 4)
+
+## 📚 Learning Goals
+This project is part of a structured learning path to:
+- Understand backend architecture with NestJS
+- Implement real-world auth flows
+- Learn clean modular backend code
+- Prepare for advanced topics like microservices and message queues
+
+## 👨‍💻 Author
+Built by Daniel, a backend development trainee exploring scalable server-side applications using NestJS and modern practices.
+
+
