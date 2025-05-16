@@ -52,4 +52,12 @@ This is a backend API built with NestJS, designed as a practice project to imple
 1. Clone this repository.
 2. Install dependencies with `npm install`.
 3. Create a `.env` file in the project root with the following content:
+  ```DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=admin123
+DB_NAME=crud_tareas
+JWT_SECRET=jwt_super_secret
+JWT_EXPIRES_IN=1d
+```
 
