@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthenticatedRequest } from './types/authRequest';
 import { RegisterDto } from './dto/register.dto';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -18,6 +19,7 @@ export class AuthController {
   async login(@Body() body: { email: string; password: string }) {
     return this.authService.login(body.email, body.password);
   }
+  @Public()
   @Post('register')
   async register(@Body() body: RegisterDto): Promise<{ message: string }> {
     return this.authService.register(body.email, body.password);
